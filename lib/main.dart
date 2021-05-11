@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ticket_booking/CustomShapeClipper.dart';
 import 'package:ticket_booking/CustomeAppBar.dart';
+import 'package:ticket_booking/flight_list.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -153,7 +154,15 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                         suffixIcon: Material(
                           elevation: 2,
                           borderRadius: BorderRadius.circular(50),
-                          child: Icon(Icons.search, color: Colors.black),
+                          child: InkWell(
+                            child: Icon(Icons.search, color: Colors.black),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FlightListing()));
+                            },
+                          ),
                         ),
                         border: InputBorder.none,
                       ),
