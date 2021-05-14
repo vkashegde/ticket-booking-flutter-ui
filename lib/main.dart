@@ -28,6 +28,9 @@ const TextStyle dropDownLabelStyle =
 const TextStyle dropDownMenuItemStyle =
     TextStyle(color: Colors.black, fontSize: 16);
 
+//text controller
+final _searchFieldCOntroller = TextEditingController(text: locations[1]);
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
 
@@ -145,7 +148,7 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                       Radius.circular(30),
                     ),
                     child: TextField(
-                      controller: TextEditingController(text: locations[1]),
+                      controller: _searchFieldCOntroller,
                       style: dropDownMenuItemStyle,
                       cursorColor: appTheme.primaryColor,
                       decoration: InputDecoration(
@@ -160,7 +163,14 @@ class _HomeScreenTopState extends State<HomeScreenTop> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => FlightListing()));
+                                      builder: (context) =>
+                                          InheritedFlightListing(
+                                            fromLocation: locations[
+                                                selectedlocationIndex],
+                                            toLocation:
+                                                _searchFieldCOntroller.text,
+                                            child: FlightListing(),
+                                          )));
                             },
                           ),
                         ),

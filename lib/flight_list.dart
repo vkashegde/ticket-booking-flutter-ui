@@ -6,9 +6,21 @@ final Color discountBackgroundColor = Color(0xFFFFE08D);
 final Color flightBorderColor = Color(0xFFE6E6E6);
 final Color chipBackgroundColor = Color(0xFFF6F6F6);
 
-class FlightListing extends StatelessWidget {
-  const FlightListing({Key key}) : super(key: key);
+class InheritedFlightListing extends InheritedWidget {
+  final String fromLocation, toLocation;
+  InheritedFlightListing({this.fromLocation, this.toLocation, Widget child})
+      : super(child: child);
+  @override
+  bool updateShouldNotify(covariant InheritedWidget oldWidget) {
+    return true;
+  }
 
+  static InheritedFlightListing of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<InheritedFlightListing>();
+  }
+}
+
+class FlightListing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +47,8 @@ class FlightListing extends StatelessWidget {
 }
 
 class FlightListTopPart extends StatelessWidget {
-  const FlightListTopPart({Key key}) : super(key: key);
+  final String fromLocation, toLocation;
+  const FlightListTopPart({this.fromLocation, this.toLocation});
 
   @override
   Widget build(BuildContext context) {
@@ -71,12 +84,14 @@ class FlightListTopPart extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Boston (BOS)', style: TextStyle(fontSize: 16)),
+                        Text(
+                            '${InheritedFlightListing.of(context).fromLocation}',
+                            style: TextStyle(fontSize: 16)),
                         Divider(
                           color: Colors.grey,
                           height: 20,
                         ),
-                        Text('New York City (JFK)',
+                        Text('${InheritedFlightListing.of(context).toLocation}',
                             style: TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold)),
                       ],
